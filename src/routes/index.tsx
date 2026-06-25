@@ -3,6 +3,7 @@ import { SiteLayout, SectionTitle } from "@/components/site/SiteLayout";
 import { Shirt, ShieldCheck, Heart, Store, Sparkles, BadgeCheck, Users, UserCog } from "lucide-react";
 import { type CategorySlug } from "@/lib/products";
 import { LINKS as SOCIAL } from "@/lib/social";
+import { SpinWheel } from "@/components/site/SpinWheel";
 import hero from "@/assets/hero.webp";
 import rack from "@/assets/rack.jpg";
 import cDresses from "@/assets/cat-dresses.jpg";
@@ -56,6 +57,8 @@ const gallery = [store, D5, D2, D3, D7, D1];
 function Home() {
   return (
     <SiteLayout>
+      <SpinWheel />
+
       {/* Announcement bar — homepage only */}
       <div className="w-full bg-rose text-white text-center py-2 text-[11px] sm:text-xs tracking-wide font-medium">
         🛍️ Only In-Store Pickup Available — No Home Delivery

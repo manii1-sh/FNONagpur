@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
-import { useCart, buildWhatsAppUrl } from "@/lib/cart";
-import { ShoppingBag, Trash2, Plus, Minus, MessageCircle, ChevronRight } from "lucide-react";
+import { useCart, buildWhatsAppUrl, applyPromo, markPromoUsed } from "@/lib/cart";
+import { ShoppingBag, Trash2, Plus, Minus, MessageCircle, ChevronRight, Tag, CheckCircle2, XCircle } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({ meta: [{ title: "Cart — FNO Jaripatka" }] }),
@@ -10,6 +11,22 @@ export const Route = createFileRoute("/cart")({
 
 function CartPage() {
   const { items, removeItem, updateQty, total, count, clearCart } = useCart();
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedPromo, setAppliedPromo] = useState<{ code: string; discount: number; offer: string } | null>(null);
+  const [promoError, setPromoError] = useState("");
+
+  const finalTotal = appliedPromo ? Math.max(0, total - appliedPromo.discount) : total;
+
+  function handleApplyPromo() {
+    setPromoError("");
+    if (!promoInput.trim()) return;
+    const result = applyPromo(promoInput, total);
+    if (!result) {
+      setPromoError("Invalid or already used promo code.");
+      return;
+    }
+    setAppliedPromo({ code: promoInput.trim().toUpperCase(), ...result });
+  }
 
   if (items.length === 0) {
     return (
@@ -120,6 +137,50 @@ function CartPage() {
             ))}
           </div>
 
+          {/* Promo Code */}
+          <div className="bg-white rounded-2xl p-5 border border-border mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Tag className="h-4 w-4 text-rose" />
+              <h3 className="font-display text-base text-ink">Have a Promo Code?</h3>
+            </div>
+            {!appliedPromo ? (
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={promoInput}
+                  onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                  placeholder="Enter code"
+                  className="flex-1 border border-border rounded-lg px-3 py-2 text-sm uppercase font-mono focus:outline-none focus:ring-2 focus:ring-rose/30"
+                />
+                <button
+                  onClick={handleApplyPromo}
+                  className="bg-rose text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-rose/90 transition"
+                >
+                  Apply
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between bg-green-50 rounded-lg px-4 py-3 border border-green-200">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                  <span className="text-sm text-green-800 font-medium">{appliedPromo.code} applied!</span>
+                </div>
+                <button
+                  onClick={() => setAppliedPromo(null)}
+                  className="text-green-600 hover:text-green-800 text-xs"
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+            {promoError && (
+              <div className="flex items-center gap-2 mt-2 text-xs text-red-600">
+                <XCircle className="h-3.5 w-3.5" />
+                {promoError}
+              </div>
+            )}
+          </div>
+
           {/* Order Summary */}
           <div className="bg-cream rounded-2xl p-5 border border-border mb-6">
             <h3 className="font-display text-lg text-ink mb-4">Order Summary</h3>
@@ -137,21 +198,42 @@ function CartPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-border flex justify-between font-semibold text-ink">
-              <span>Total</span>
-              <span className="text-lg">₹{total.toLocaleString("en-IN")}</span>
+            <div className="mt-4 pt-4 border-t border-border space-y-2">
+              <div className="flex justify-between text-sm text-ink/70">
+                <span>Subtotal</span>
+                <span>₹{total.toLocaleString("en-IN")}</span>
+              </div>
+              {appliedPromo && (
+                <div className="flex justify-between text-sm text-green-600 font-medium">
+                  <span>Discount ({appliedPromo.offer})</span>
+                  <span>
+                    {appliedPromo.discount > 0
+                      ? `-₹${appliedPromo.discount.toLocaleString("en-IN")}`
+                      : "Free Accessory"}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between font-semibold text-ink pt-1 border-t border-border">
+                <span>Total</span>
+                <span className="text-lg">₹{finalTotal.toLocaleString("en-IN")}</span>
+              </div>
             </div>
           </div>
 
           {/* WhatsApp Checkout */}
           <a
-            href={buildWhatsAppUrl(items)}
+            href={buildWhatsAppUrl(
+              items,
+              appliedPromo?.code,
+              appliedPromo?.discount,
+            )}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => appliedPromo && markPromoUsed()}
             className="w-full flex items-center justify-center gap-3 bg-[#25D366] text-white py-4 rounded-2xl text-sm font-semibold hover:bg-[#22c55e] transition-colors shadow-md"
           >
             <MessageCircle className="h-5 w-5" />
-            Order via WhatsApp — ₹{total.toLocaleString("en-IN")}
+            Order via WhatsApp — ₹{finalTotal.toLocaleString("en-IN")}
           </a>
 
           <p className="text-center text-xs text-ink/40 mt-3">
