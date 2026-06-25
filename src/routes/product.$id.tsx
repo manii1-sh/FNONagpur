@@ -3,6 +3,7 @@ import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { getProductById, CATEGORY_LABELS } from "@/lib/products";
 import { useCart, CLOTHING_SIZES, buildWhatsAppUrl } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 import { ShoppingBag, Heart, ChevronRight, CheckCircle2, MessageCircle } from "lucide-react";
 
 export const Route = createFileRoute("/product/$id")({
@@ -34,6 +35,7 @@ export const Route = createFileRoute("/product/$id")({
 function ProductPage() {
   const { product } = Route.useLoaderData();
   const { addItem } = useCart();
+  const { isWishlisted, toggle: toggleWishlist } = useWishlist();
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [added, setAdded] = useState(false);
@@ -122,10 +124,20 @@ function ProductPage() {
               )}
               {/* Wishlist icon on image */}
               <button
-                aria-label="Add to wishlist"
-                className="absolute top-4 right-4 h-9 w-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-ink hover:text-rose shadow transition"
+                aria-label={isWishlisted(product.id) ? "Remove from wishlist" : "Add to wishlist"}
+                onClick={() => toggleWishlist({
+                  productId: product.id,
+                  name: product.name,
+                  price: product.price,
+                  originalPrice: product.originalPrice,
+                  image: product.image,
+                  category: product.category,
+                })}
+                className={`absolute top-4 right-4 h-9 w-9 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow transition ${
+                  isWishlisted(product.id) ? "text-rose" : "text-ink hover:text-rose"
+                }`}
               >
-                <Heart className="h-4 w-4" />
+                <Heart className={`h-4 w-4 ${isWishlisted(product.id) ? "fill-rose" : ""}`} />
               </button>
             </div>
 
@@ -246,19 +258,7 @@ function ProductPage() {
                 )}
               </div>
 
-              {/* Trust badges */}
-              <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-                {[
-                  { emoji: "🚚", label: "Fast Delivery" },
-                  { emoji: "↩️", label: "Easy Returns" },
-                  { emoji: "✅", label: "Quality Check" },
-                ].map((b) => (
-                  <div key={b.label} className="bg-cream rounded-xl py-3 px-2">
-                    <div className="text-xl">{b.emoji}</div>
-                    <div className="text-[10px] text-ink/60 mt-1">{b.label}</div>
-                  </div>
-                ))}
-              </div>
+              {/* Trust badges removed — in-store pickup only, no delivery/returns */}
             </div>
           </div>
         </div>
