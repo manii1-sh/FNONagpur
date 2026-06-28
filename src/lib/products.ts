@@ -17,6 +17,11 @@ export const CATEGORY_SLUGS = [
   "dresses",
   "tops",
   "shirts",
+  "earrings",
+  "necklaces",
+  "bracelets",
+  "rings",
+  "perfumes",
   "accessories",
   "bags",
   "new-arrivals",
@@ -24,13 +29,28 @@ export const CATEGORY_SLUGS = [
 
 export type CategorySlug = (typeof CATEGORY_SLUGS)[number];
 
+// Sub-categories that live under Accessories — not shown as top-level filters
+export const ACCESSORY_SUB_SLUGS: CategorySlug[] = [
+  "earrings", "necklaces", "bracelets", "rings", "perfumes", "bags",
+];
+
+// Top-level slugs shown in Shop filter chips & homepage category circles
+export const TOP_LEVEL_SLUGS = CATEGORY_SLUGS.filter(
+  (s) => !ACCESSORY_SUB_SLUGS.includes(s),
+) as CategorySlug[];
+
 export const CATEGORY_LABELS: Record<CategorySlug, string> = {
-  "dresses": "Dresses",
-  "tops": "Tops",
-  "shirts": "Shirts",
-  "accessories": "Accessories",
-  "bags": "Bags",
-  "new-arrivals": "New Arrivals",
+  "dresses":    "Dresses",
+  "tops":       "Tops",
+  "shirts":     "Shirts",
+  "earrings":   "Earrings",
+  "necklaces":  "Necklaces",
+  "bracelets":  "Bracelets",
+  "rings":      "Rings",
+  "perfumes":   "Perfumes",
+  "accessories":"Accessories",
+  "bags":       "Bags",
+  "new-arrivals":"New Arrivals",
 };
 
 // ─── Local asset imports ───────────────────────────────────────────────────────
@@ -38,6 +58,7 @@ export const CATEGORY_LABELS: Record<CategorySlug, string> = {
 // Dresses
 import D1 from "@/assets/D1.webp";
 import D2 from "@/assets/D2.webp";
+import D3 from "@/assets/D3.webp";
 import D4 from "@/assets/D4.webp";
 import D5 from "@/assets/D5.webp";
 import D6 from "@/assets/D6.webp";
@@ -70,6 +91,74 @@ import S4 from "@/assets/S4.jpeg";
 import S5 from "@/assets/S5.jpeg";
 import S6 from "@/assets/S6.jpeg";
 
+// Earrings (E1–E6 + EE1–EE12)
+import E1 from "@/assets/E1.webp";
+import E2 from "@/assets/E2.webp";
+import E3 from "@/assets/E3.webp";
+import E4 from "@/assets/E4.webp";
+import E5 from "@/assets/E5.webp";
+import E6 from "@/assets/E6.webp";
+import EE1 from "@/assets/EARING  (1).webp";
+import EE2 from "@/assets/EARING  (2).webp";
+import EE3 from "@/assets/EARING  (3).webp";
+import EE4 from "@/assets/EARING  (4).webp";
+import EE5 from "@/assets/EARING  (5).webp";
+import EE6 from "@/assets/EARING  (6).webp";
+import EE7 from "@/assets/EARING  (7).webp";
+import EE8 from "@/assets/EARING  (8).webp";
+import EE9 from "@/assets/EARING  (9).webp";
+import EE10 from "@/assets/EARING  (10).webp";
+import EE11 from "@/assets/EARING  (11).webp";
+import EE12 from "@/assets/EARING  (12).webp";
+
+// Necklaces (N1–N10)
+import N1 from "@/assets/N (1).webp";
+import N2 from "@/assets/N (2).webp";
+import N3 from "@/assets/N (3).webp";
+import N4 from "@/assets/N (4).webp";
+import N5 from "@/assets/N (5).webp";
+import N6 from "@/assets/N (6).webp";
+import N7 from "@/assets/N (7).webp";
+import N8 from "@/assets/N (8).webp";
+import N9 from "@/assets/N (9).webp";
+import N10 from "@/assets/N (10).webp";
+
+// Bracelets (BR1–BR14)
+import BR1  from "@/assets/BRACELET (1).webp";
+import BR2  from "@/assets/BRACELET (2).webp";
+import BR3  from "@/assets/BRACELET (3).webp";
+import BR4  from "@/assets/BRACELET (4).webp";
+import BR5  from "@/assets/BRACELET (5).webp";
+import BR6  from "@/assets/BRACELET (6).webp";
+import BR7  from "@/assets/BRACELET (7).webp";
+import BR8  from "@/assets/BRACELET (8).webp";
+import BR9  from "@/assets/BRACELET (9).webp";
+import BR10 from "@/assets/BRACELET (10).webp";
+import BR11 from "@/assets/BRACELET (11).webp";
+import BR13 from "@/assets/BRACELET (13).webp";
+import BR15 from "@/assets/BRACELET (15).webp";
+import BR16 from "@/assets/BRACELET (16).webp";
+
+// Rings (RI1–RI12)
+import RI1 from "@/assets/RI1.webp";
+import RI2 from "@/assets/RI2.webp";
+import RI3 from "@/assets/RI3.webp";
+import RI4 from "@/assets/RI4.webp";
+import RI5 from "@/assets/RI5.webp";
+import RI6 from "@/assets/RI6.webp";
+import RI7 from "@/assets/RI7.webp";
+import RI8 from "@/assets/RI8.webp";
+import RI9 from "@/assets/RI9.webp";
+import RI10 from "@/assets/RI10.webp";
+import RI11 from "@/assets/RI11.webp";
+import RI12 from "@/assets/RI12.webp";
+
+// Perfumes (P1–P4)
+import P1 from "@/assets/P1.webp";
+import P2 from "@/assets/P2.webp";
+import P3 from "@/assets/P3.webp";
+import P4 from "@/assets/P4.webp";
+
 // Bags
 import B1 from "@/assets/B1.webp";
 import B2 from "@/assets/B2.webp";
@@ -92,6 +181,9 @@ import NA4 from "@/assets/NewArrivals(4).jpeg";
 import NA5 from "@/assets/NewArrivals(5).jpeg";
 import NA6 from "@/assets/NewArrivals(6).jpeg";
 import NA7 from "@/assets/NewArrivals(7).jpeg";
+import KIT1   from "@/assets/KIT1.webp";
+import KIT2   from "@/assets/KIT2.webp";
+import PANDA1 from "@/assets/PANDA1.webp";
 
 // ─── Products ─────────────────────────────────────────────────────────────────
 
@@ -132,31 +224,107 @@ export const products: Product[] = [
   { id: 28, name: "S5", price: 799,  originalPrice: 1099, category: "shirts", image: S5, badge: "Sale" },
   { id: 29, name: "S6", price: 1099, category: "shirts", image: S6 },
 
-  // ── ACCESSORIES (30–33) ────────────────────────────────────────────────────
-  // No accessory images available yet — category hidden until real photos are added
+  // ── ACCESSORIES — empty for now, add real images soon ──────────────────────
 
-  // ── BAGS (34–45) ───────────────────────────────────────────────────────────
-  { id: 34, name: "B1",  price: 899,  category: "bags", image: B1,  badge: "New",  hasSizes: false },
-  { id: 35, name: "B2",  price: 999,  originalPrice: 1299, category: "bags", image: B2, badge: "Sale", hasSizes: false },
-  { id: 36, name: "B3",  price: 1099, category: "bags", image: B3,  hasSizes: false },
-  { id: 37, name: "B4",  price: 799,  category: "bags", image: B4,  badge: "Hot",  hasSizes: false },
-  { id: 38, name: "B5",  price: 1199, originalPrice: 1599, category: "bags", image: B5, badge: "Sale", hasSizes: false },
-  { id: 39, name: "B6",  price: 949,  category: "bags", image: B7,  hasSizes: false },
-  { id: 40, name: "B7",  price: 1099, category: "bags", image: B8,  badge: "New",  hasSizes: false },
-  { id: 41, name: "B8",  price: 849,  category: "bags", image: B9,  hasSizes: false },
-  { id: 42, name: "B9",  price: 999,  originalPrice: 1399, category: "bags", image: B10, badge: "Sale", hasSizes: false },
-  { id: 43, name: "B10", price: 1299, category: "bags", image: B11, badge: "Hot",  hasSizes: false },
-  { id: 44, name: "B11", price: 749,  category: "bags", image: B12, hasSizes: false },
-  { id: 45, name: "B12", price: 1149, category: "bags", image: B13, badge: "New",  hasSizes: false },
+  // ── EARRINGS (30–47) ──────────────────────────────────────────────────────
+  { id: 30, name: "Earring 1",  price: 199, category: "earrings", image: E1,   badge: "New", hasSizes: false },
+  { id: 31, name: "Earring 2",  price: 249, category: "earrings", image: E2,   hasSizes: false },
+  { id: 32, name: "Earring 3",  price: 179, category: "earrings", image: E3,   badge: "Hot", hasSizes: false },
+  { id: 33, name: "Earring 4",  price: 299, category: "earrings", image: E4,   hasSizes: false },
+  { id: 34, name: "Earring 5",  price: 219, category: "earrings", image: E5,   badge: "New", hasSizes: false },
+  { id: 35, name: "Earring 6",  price: 189, category: "earrings", image: E6,   hasSizes: false },
+  { id: 87, name: "Earring 7",  price: 320, category: "earrings", image: EE1,  badge: "New", hasSizes: false },
+  { id: 88, name: "Earring 8",  price: 320, category: "earrings", image: EE2,  hasSizes: false },
+  { id: 89, name: "Earring 9",  price: 230, category: "earrings", image: EE3,  hasSizes: false },
+  { id: 90, name: "Earring 10", price: 250, category: "earrings", image: EE4,  badge: "Hot", hasSizes: false },
+  { id: 91, name: "Earring 11", price: 250, category: "earrings", image: EE5,  hasSizes: false },
+  { id: 92, name: "Earring 12", price: 350, category: "earrings", image: EE6,  hasSizes: false },
+  { id: 93, name: "Earring 13", price: 230, category: "earrings", image: EE7,  badge: "New", hasSizes: false },
+  { id: 94, name: "Earring 14", price: 320, category: "earrings", image: EE8,  hasSizes: false },
+  { id: 95, name: "Earring 15", price: 320, category: "earrings", image: EE9,  hasSizes: false },
+  { id: 96, name: "Earring 16", price: 250, category: "earrings", image: EE10, badge: "Hot", hasSizes: false },
+  { id: 97, name: "Earring 17", price: 495, category: "earrings", image: EE11, hasSizes: false },
+  { id: 98, name: "Earring 18", price: 250, category: "earrings", image: EE12, hasSizes: false },
 
-  // ── NEW ARRIVALS (46–52) ───────────────────────────────────────────────────
-  { id: 46, name: "New Arrival 1", price: 1299, category: "new-arrivals", image: NA1, badge: "New" },
-  { id: 47, name: "New Arrival 2", price: 999,  category: "new-arrivals", image: NA2, badge: "New" },
-  { id: 48, name: "New Arrival 3", price: 1499, originalPrice: 1999, category: "new-arrivals", image: NA3, badge: "New" },
-  { id: 49, name: "New Arrival 4", price: 849,  category: "new-arrivals", image: NA4, badge: "New" },
-  { id: 50, name: "New Arrival 5", price: 1199, category: "new-arrivals", image: NA5, badge: "New" },
-  { id: 51, name: "New Arrival 6", price: 699,  category: "new-arrivals", image: NA6, badge: "New" },
-  { id: 52, name: "New Arrival 7", price: 1399, originalPrice: 1799, category: "new-arrivals", image: NA7, badge: "New" },
+  // ── NECKLACES (36–45) ─────────────────────────────────────────────────────
+  { id: 36, name: "Necklace 1",  price: 210, category: "necklaces", image: N1,  badge: "New", hasSizes: false },
+  { id: 37, name: "Necklace 2",  price: 280, category: "necklaces", image: N2,  hasSizes: false },
+  { id: 38, name: "Necklace 3",  price: 280, category: "necklaces", image: N3,  badge: "Hot", hasSizes: false },
+  { id: 39, name: "Necklace 4",  price: 350, category: "necklaces", image: N4,  hasSizes: false },
+  { id: 40, name: "Necklace 5",  price: 449, category: "necklaces", image: N5,  badge: "New", hasSizes: false },
+  { id: 41, name: "Necklace 6",  price: 280, category: "necklaces", image: N6,  hasSizes: false },
+  { id: 42, name: "Necklace 7",  price: 495, category: "necklaces", image: N7,  hasSizes: false },
+  { id: 43, name: "Necklace 8",  price: 280, category: "necklaces", image: N8,  badge: "Hot", hasSizes: false },
+  { id: 44, name: "Necklace 9",  price: 510, category: "necklaces", image: N9,  hasSizes: false },
+  { id: 45, name: "Necklace 10", price: 510, category: "necklaces", image: N10, badge: "New", hasSizes: false },
+
+  // ── BRACELETS (99–112) ───────────────────────────────────────────────────
+  { id: 99,  name: "Bracelet 1",  price: 449, category: "bracelets", image: BR1,  badge: "New", hasSizes: false },
+  { id: 100, name: "Bracelet 2",  price: 1000, category: "bracelets", image: BR2,  hasSizes: false },
+  { id: 101, name: "Bracelet 3",  price: 560, category: "bracelets", image: BR3,  badge: "Hot", hasSizes: false },
+  { id: 102, name: "Bracelet 4",  price: 499, category: "bracelets", image: BR4,  hasSizes: false },
+  { id: 103, name: "Bracelet 5",  price: 199, category: "bracelets", image: BR5,  badge: "New", hasSizes: false },
+  { id: 104, name: "Bracelet 6",  price: 399, category: "bracelets", image: BR6,  hasSizes: false },
+  { id: 105, name: "Bracelet 7",  price: 449, category: "bracelets", image: BR7,  hasSizes: false },
+  { id: 106, name: "Bracelet 8",  price: 550, category: "bracelets", image: BR8,  badge: "Hot", hasSizes: false },
+  { id: 107, name: "Bracelet 9",  price: 550, category: "bracelets", image: BR9,  hasSizes: false },
+  { id: 108, name: "Bracelet 10", price: 499, category: "bracelets", image: BR10, badge: "New", hasSizes: false },
+  { id: 109, name: "Bracelet 11", price: 350, category: "bracelets", image: BR11, hasSizes: false },
+  { id: 110, name: "Bracelet 12", price: 499, category: "bracelets", image: BR13, hasSizes: false },
+  { id: 111, name: "Bracelet 13", price: 350, category: "bracelets", image: BR15, badge: "New", hasSizes: false },
+  { id: 112, name: "Bracelet 14", price: 320, category: "bracelets", image: BR16, hasSizes: false },
+
+  // ── RINGS (46–57) ─────────────────────────────────────────────────────────
+  { id: 46, name: "Ring 1",  price: 199, category: "rings", image: RI1,  badge: "New", hasSizes: false },
+  { id: 47, name: "Ring 2",  price: 249, category: "rings", image: RI2,  hasSizes: false },
+  { id: 48, name: "Ring 3",  price: 229, category: "rings", image: RI3,  badge: "Hot", hasSizes: false },
+  { id: 49, name: "Ring 4",  price: 279, category: "rings", image: RI4,  hasSizes: false },
+  { id: 50, name: "Ring 5",  price: 189, category: "rings", image: RI5,  badge: "New", hasSizes: false },
+  { id: 51, name: "Ring 6",  price: 199, category: "rings", image: RI6,  hasSizes: false },
+  { id: 52, name: "Ring 7",  price: 219, category: "rings", image: RI7,  hasSizes: false },
+  { id: 53, name: "Ring 8",  price: 179, category: "rings", image: RI8,  badge: "Hot", hasSizes: false },
+  { id: 54, name: "Ring 9",  price: 199, category: "rings", image: RI9,  hasSizes: false },
+  { id: 55, name: "Ring 10", price: 249, category: "rings", image: RI10, badge: "New", hasSizes: false },
+  { id: 56, name: "Ring 11", price: 229, category: "rings", image: RI11, hasSizes: false },
+  { id: 57, name: "Ring 12", price: 299, category: "rings", image: RI12, hasSizes: false },
+
+  // ── PERFUMES (58–61) ──────────────────────────────────────────────────────
+  { id: 58, name: "Perfume 1", price: 3299, category: "perfumes", image: P1, badge: "New", hasSizes: false },
+  { id: 59, name: "Perfume 2", price: 1599, category: "perfumes", image: P2, hasSizes: false },
+  { id: 60, name: "Perfume 3", price: 3299, category: "perfumes", image: P3, badge: "Hot", hasSizes: false },
+  { id: 61, name: "Perfume 4", price: 1599, category: "perfumes", image: P4, hasSizes: false },
+
+  // ── BAGS (62–73) ──────────────────────────────────────────────────────────
+  { id: 62, name: "B1",  price: 899,  category: "bags", image: B1,  badge: "New",  hasSizes: false },
+  { id: 63, name: "B2",  price: 999,  originalPrice: 1299, category: "bags", image: B2, badge: "Sale", hasSizes: false },
+  { id: 64, name: "B3",  price: 1099, category: "bags", image: B3,  hasSizes: false },
+  { id: 65, name: "B4",  price: 799,  category: "bags", image: B4,  badge: "Hot",  hasSizes: false },
+  { id: 66, name: "B5",  price: 1199, originalPrice: 1599, category: "bags", image: B5, badge: "Sale", hasSizes: false },
+  { id: 67, name: "B6",  price: 949,  category: "bags", image: B7,  hasSizes: false },
+  { id: 68, name: "B7",  price: 1099, category: "bags", image: B8,  badge: "New",  hasSizes: false },
+  { id: 69, name: "B8",  price: 849,  category: "bags", image: B9,  hasSizes: false },
+  { id: 70, name: "B9",  price: 999,  originalPrice: 1399, category: "bags", image: B10, badge: "Sale", hasSizes: false },
+  { id: 71, name: "B10", price: 1299, category: "bags", image: B11, badge: "Hot",  hasSizes: false },
+  { id: 72, name: "B11", price: 749,  category: "bags", image: B12, hasSizes: false },
+  { id: 73, name: "B12", price: 1149, category: "bags", image: B13, badge: "New",  hasSizes: false },
+
+  // ── NEW ARRIVALS (74–87) ──────────────────────────────────────────────────
+  { id: 74, name: "Elegant Pink Dress",    price: 1299, category: "new-arrivals", image: D1,  badge: "New" },
+  { id: 75, name: "Classic Black Dress",   price: 999,  category: "new-arrivals", image: D2,  badge: "New" },
+  { id: 76, name: "Floral Print Dress",    price: 1499, originalPrice: 1999, category: "new-arrivals", image: D3, badge: "New" },
+  { id: 77, name: "Burgundy Blazer Dress", price: 1399, category: "new-arrivals", image: D5,  badge: "New" },
+  { id: 78, name: "Minimalist Dress",      price: 899,  category: "new-arrivals", image: D6,  badge: "New" },
+  { id: 79, name: "Evening Dress",         price: 1599, category: "new-arrivals", image: D7,  badge: "New" },
+  { id: 80, name: "New Arrival 1",         price: 1299, category: "new-arrivals", image: NA1, badge: "New" },
+  { id: 81, name: "New Arrival 2",         price: 999,  category: "new-arrivals", image: NA2, badge: "New" },
+  { id: 82, name: "New Arrival 3",         price: 1499, originalPrice: 1999, category: "new-arrivals", image: NA3, badge: "New" },
+  { id: 83, name: "New Arrival 4",         price: 849,  category: "new-arrivals", image: NA4, badge: "New" },
+  { id: 84, name: "New Arrival 5",         price: 1199, category: "new-arrivals", image: NA5, badge: "New" },
+  { id: 85, name: "New Arrival 6",         price: 699,  category: "new-arrivals", image: NA6, badge: "New" },
+  { id: 86, name: "New Arrival 7",         price: 1399, originalPrice: 1799, category: "new-arrivals", image: NA7,    badge: "New" },
+  { id: 113, name: "New Arrival 8",          price: 500,  category: "new-arrivals", image: KIT1,   badge: "New" },
+  { id: 114, name: "New Arrival 9",    price: 380,  category: "new-arrivals", image: KIT2,   badge: "New" },
+  { id: 115, name: "New Arrival 10",           price: 850,  category: "new-arrivals", image: PANDA1, badge: "New" },
 
 ];
 

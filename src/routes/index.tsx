@@ -31,11 +31,11 @@ export const Route = createFileRoute("/")({
 });
 
 const categories: { label: string; img: string; slug: CategorySlug }[] = [
-  { label: "Dresses", img: cDresses, slug: "dresses" },
-  { label: "Tops", img: cTops, slug: "tops" },
-  { label: "Shirts", img: cCoords, slug: "shirts" },
-  { label: "Accessories", img: cAcc, slug: "accessories" },
-  { label: "New Arrivals", img: cNew, slug: "new-arrivals" },
+  { label: "Dresses",     img: cDresses, slug: "dresses" },
+  { label: "Tops",        img: cTops,    slug: "tops" },
+  { label: "Shirts",      img: cCoords,  slug: "shirts" },
+  { label: "Accessories", img: cAcc,     slug: "accessories" },
+  { label: "New Arrivals",img: cNew,     slug: "new-arrivals" },
 ];
 
 const features = [

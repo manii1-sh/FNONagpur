@@ -5,7 +5,6 @@ import { getProductById, CATEGORY_LABELS } from "@/lib/products";
 import { useCart, CLOTHING_SIZES, buildWhatsAppUrl } from "@/lib/cart";
 import { useWishlist } from "@/lib/wishlist";
 import { ShoppingBag, Heart, ChevronRight, CheckCircle2, MessageCircle } from "lucide-react";
-
 export const Route = createFileRoute("/product/$id")({
   head: ({ params }) => {
     const product = getProductById(Number(params.id));
@@ -34,15 +33,15 @@ export const Route = createFileRoute("/product/$id")({
 
 function ProductPage() {
   const { product } = Route.useLoaderData();
-  const { addItem } = useCart();
+  const { addItem, isInCart } = useCart();
   const { isWishlisted, toggle: toggleWishlist } = useWishlist();
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const [added, setAdded] = useState(false);
   const [sizeError, setSizeError] = useState(false);
 
   const needsSize = product.hasSizes !== false;
   const categoryLabel = CATEGORY_LABELS[product.category] ?? product.category;
+  const alreadyInCart = isInCart(product.id, needsSize ? (selectedSize || undefined) : "Free Size");
 
   const productUrl =
     typeof window !== "undefined"
@@ -72,8 +71,6 @@ function ProductPage() {
       size: needsSize ? selectedSize : "Free Size",
       productUrl,
     });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
   }
 
   function handleBuyNow() {
@@ -210,13 +207,13 @@ function ProductPage() {
                 <button
                   onClick={handleAddToCart}
                   className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border text-sm font-medium transition-all ${
-                    added
+                    alreadyInCart
                       ? "border-green-500 bg-green-50 text-green-700"
                       : "border-ink text-ink hover:bg-ink hover:text-white"
                   }`}
                 >
-                  {added ? (
-                    <><CheckCircle2 className="h-4 w-4" /> Added to Cart!</>
+                  {alreadyInCart ? (
+                    <><CheckCircle2 className="h-4 w-4" /> Added to Cart</>
                   ) : (
                     <><ShoppingBag className="h-4 w-4" /> Add to Cart</>
                   )}

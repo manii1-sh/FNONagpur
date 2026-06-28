@@ -6,8 +6,3 @@
   NODE_VERSION = "20"
   NODE_ENV = "development"
   NPM_FLAGS = "--include=dev"
-
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/server"
-  status = 200
