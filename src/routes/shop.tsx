@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { products, CATEGORY_LABELS, TOP_LEVEL_SLUGS, ACCESSORY_SUB_SLUGS, type CategorySlug } from "@/lib/products";
-import { ShoppingBag, Heart, ChevronRight, SlidersHorizontal } from "lucide-react";
-import { useState } from "react";
+import { ShoppingBag, Heart, ChevronRight, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -15,6 +15,7 @@ export const Route = createFileRoute("/shop")({
 });
 
 type FilterSlug = CategorySlug | "all";
+type AccSubFilter = CategorySlug | "all-accessories";
 
 const PRICE_RANGES = [
   { label: "All Prices", min: 0, max: Infinity },
@@ -25,19 +26,51 @@ const PRICE_RANGES = [
   { label: "₹1500+", min: 1500, max: Infinity },
 ];
 
+const ACC_SUBS: { slug: CategorySlug; label: string; emoji: string }[] = [
+  { slug: "earrings",  label: "Earrings",  emoji: "💎" },
+  { slug: "necklaces", label: "Necklaces", emoji: "📿" },
+  { slug: "bracelets", label: "Bracelets", emoji: "🪬" },
+  { slug: "rings",     label: "Rings",     emoji: "💍" },
+  { slug: "perfumes",  label: "Perfumes",  emoji: "🌸" },
+  { slug: "bags",      label: "Bags",      emoji: "👜" },
+];
+
+function useDropdown() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    function handler(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+  return { open, setOpen, ref };
+}
+
 function ShopPage() {
   const [activeFilter, setActiveFilter] = useState<FilterSlug>("all");
+  const [accSub, setAccSub] = useState<AccSubFilter>("all-accessories");
   const [priceRange, setPriceRange] = useState(PRICE_RANGES[0]);
+
+  const price  = useDropdown();
+  const accDd  = useDropdown();
+
+  const isAccessories = activeFilter === "accessories";
 
   const filtered = (() => {
     let list = products;
+
     if (activeFilter === "accessories") {
-      list = list.filter(
-        (p) => p.category === "accessories" || ACCESSORY_SUB_SLUGS.includes(p.category),
-      );
+      if (accSub === "all-accessories") {
+        list = list.filter((p) => p.category === "accessories" || ACCESSORY_SUB_SLUGS.includes(p.category));
+      } else {
+        list = list.filter((p) => p.category === accSub);
+      }
     } else if (activeFilter !== "all") {
       list = list.filter((p) => p.category === activeFilter);
     }
+
     if (priceRange.max !== Infinity || priceRange.min > 0) {
       list = list.filter((p) => p.price >= priceRange.min && p.price <= priceRange.max);
     }
@@ -51,6 +84,12 @@ function ShopPage() {
   function getFilterLabel(slug: CategorySlug): string {
     if (slug === "accessories") return `Accessories (${accessoryCount})`;
     return `${CATEGORY_LABELS[slug]} (${products.filter((p) => p.category === slug).length})`;
+  }
+
+  function getAccSubLabel(): string {
+    if (accSub === "all-accessories") return "All Accessories";
+    const found = ACC_SUBS.find((s) => s.slug === accSub);
+    return found ? `${found.emoji} ${found.label}` : "All Accessories";
   }
 
   return (
@@ -80,14 +119,14 @@ function ShopPage() {
       <section className="py-6 sm:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
-          {/* Filter chips — top-level only */}
+          {/* Category filter chips */}
           <div className="flex items-center gap-2 mb-2">
             <SlidersHorizontal className="h-3.5 w-3.5 text-ink/40 shrink-0" />
             <span className="text-xs text-ink/40 shrink-0">Filter:</span>
           </div>
-          <div className="flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             <button
-              onClick={() => setActiveFilter("all")}
+              onClick={() => { setActiveFilter("all"); setAccSub("all-accessories"); }}
               className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                 activeFilter === "all"
                   ? "bg-ink text-white border-ink"
@@ -96,11 +135,10 @@ function ShopPage() {
             >
               All ({products.length})
             </button>
-
             {TOP_LEVEL_SLUGS.map((slug) => (
               <button
                 key={slug}
-                onClick={() => setActiveFilter(slug)}
+                onClick={() => { setActiveFilter(slug); setAccSub("all-accessories"); }}
                 className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                   activeFilter === slug
                     ? "bg-rose text-white border-rose"
@@ -112,33 +150,99 @@ function ShopPage() {
             ))}
           </div>
 
-          {/* Price filter */}
-          <div className="flex items-center gap-2 mb-2 mt-1">
-            <span className="text-xs text-ink/40 shrink-0">💰 Price:</span>
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-            {PRICE_RANGES.map((range) => (
-              <button
-                key={range.label}
-                onClick={() => setPriceRange(range)}
-                className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                  priceRange.label === range.label
-                    ? "bg-rose text-white border-rose"
-                    : "border-border text-ink/60 hover:border-rose hover:text-rose"
-                }`}
-              >
-                {range.label}
-              </button>
-            ))}
-          </div>
+          {/* Result count + dropdowns row */}
+          <div className="flex items-center justify-between mt-4 mb-5 gap-2 flex-wrap">
+            <p className="text-xs text-ink/40">
+              {filtered.length} item{filtered.length !== 1 ? "s" : ""}
+              {activeFilter !== "all" && (
+                <> in <span className="text-rose">
+                  {isAccessories && accSub !== "all-accessories"
+                    ? ACC_SUBS.find((s) => s.slug === accSub)?.label
+                    : CATEGORY_LABELS[activeFilter as CategorySlug]}
+                </span></>
+              )}
+            </p>
 
-          {/* Result count */}
-          <p className="text-xs text-ink/40 mb-5">
-            {filtered.length} item{filtered.length !== 1 ? "s" : ""}
-            {activeFilter !== "all" && (
-              <span> in <span className="text-rose">{CATEGORY_LABELS[activeFilter as CategorySlug]}</span></span>
-            )}
-          </p>
+            <div className="flex items-center gap-2">
+              {/* Accessory sub-category dropdown — only when Accessories is active */}
+              {isAccessories && (
+                <div className="relative" ref={accDd.ref}>
+                  <button
+                    onClick={() => accDd.setOpen((o) => !o)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                      accSub !== "all-accessories"
+                        ? "bg-rose text-white border-rose"
+                        : "border-border text-ink/60 hover:border-rose hover:text-rose"
+                    }`}
+                  >
+                    {getAccSubLabel()}
+                    <ChevronDown className={`h-3 w-3 transition-transform ${accDd.open ? "rotate-180" : ""}`} />
+                  </button>
+
+                  {accDd.open && (
+                    <div className="absolute right-0 top-full mt-1.5 z-20 bg-white border border-border rounded-xl shadow-lg py-1 min-w-[160px]">
+                      <button
+                        onClick={() => { setAccSub("all-accessories"); accDd.setOpen(false); }}
+                        className={`w-full text-left px-4 py-2 text-xs transition-colors ${
+                          accSub === "all-accessories"
+                            ? "text-rose font-semibold bg-rose/5"
+                            : "text-ink/70 hover:bg-cream hover:text-rose"
+                        }`}
+                      >
+                        All Accessories
+                      </button>
+                      {ACC_SUBS.map((sub) => (
+                        <button
+                          key={sub.slug}
+                          onClick={() => { setAccSub(sub.slug); accDd.setOpen(false); }}
+                          className={`w-full text-left px-4 py-2 text-xs transition-colors ${
+                            accSub === sub.slug
+                              ? "text-rose font-semibold bg-rose/5"
+                              : "text-ink/70 hover:bg-cream hover:text-rose"
+                          }`}
+                        >
+                          {sub.emoji} {sub.label} ({products.filter((p) => p.category === sub.slug).length})
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Price dropdown */}
+              <div className="relative" ref={price.ref}>
+                <button
+                  onClick={() => price.setOpen((o) => !o)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                    priceRange.label !== "All Prices"
+                      ? "bg-rose text-white border-rose"
+                      : "border-border text-ink/60 hover:border-rose hover:text-rose"
+                  }`}
+                >
+                  ₹ {priceRange.label}
+                  <ChevronDown className={`h-3 w-3 transition-transform ${price.open ? "rotate-180" : ""}`} />
+                </button>
+
+                {price.open && (
+                  <div className="absolute right-0 top-full mt-1.5 z-20 bg-white border border-border rounded-xl shadow-lg py-1 min-w-[150px]">
+                    {PRICE_RANGES.map((range) => (
+                      <button
+                        key={range.label}
+                        onClick={() => { setPriceRange(range); price.setOpen(false); }}
+                        className={`w-full text-left px-4 py-2 text-xs transition-colors ${
+                          priceRange.label === range.label
+                            ? "text-rose font-semibold bg-rose/5"
+                            : "text-ink/70 hover:bg-cream hover:text-rose"
+                        }`}
+                      >
+                        {range.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
 
           {/* Product grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
