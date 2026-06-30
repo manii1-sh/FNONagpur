@@ -79,11 +79,7 @@ import T6 from "@/assets/T6.jpeg";
 import T7 from "@/assets/T7.webp";
 import T8 from "@/assets/T8.jpeg";
 import T9 from "@/assets/T9.jpeg";
-import T10 from "@/assets/T10.webp";
-import T11 from "@/assets/T11.webp";
-import T12 from "@/assets/T12.webp";
 import T13 from "@/assets/T13.webp";
-import T14 from "@/assets/T14.webp";
 import T15 from "@/assets/T15.webp";
 import T16 from "@/assets/T16.jpeg";
 import T17 from "@/assets/T17.jpeg";
@@ -195,13 +191,12 @@ import PANDA1 from "@/assets/PANDA1.webp";
 export const products: Product[] = [
 
   // ── DRESSES (1–6) ──────────────────────────────────────────────────────────
-  { id: 1,   name: "D1",  price: 1, originalPrice: 1799, category: "dresses", image: D1,  badge: "Sale", description: "Elegant dress perfect for every occasion." },
-  { id: 2,   name: "D2",  price: 1,  originalPrice: 1799, category: "dresses", image: D2,  badge: "Hot" },
-  { id: 3,   name: "D3",  price: 1, originalPrice: 1999, category: "dresses", image: D4,  badge: "Sale" },
-  { id: 4,   name: "D4",  price: 2380, originalPrice: 3400, category: "dresses", image: D5 },
-  { id: 5,   name: "D5",  price: 1, originalPrice: 1799, category: "dresses", image: D6 },
-  { id: 6,   name: "D6",  price: 1, originalPrice: 1799, category: "dresses", image: D7 },
-  { id: 116, name: "D7",  price: 1, originalPrice: 1799, category: "dresses", image: D8,  badge: "New" },
+  { id: 1,   name: "D1",  price: 2449, originalPrice: 3499, category: "dresses", image: D1,  badge: "Sale", description: "Elegant dress perfect for every occasion." },
+  { id: 2,   name: "D2",  price: 2029,  originalPrice: 2899, category: "dresses", image: D2,  badge: "Hot" },
+  { id: 3,   name: "D3",  price: 1889, originalPrice: 2699, category: "dresses", image: D4,  badge: "Sale" },
+  { id: 4,   name: "D4",  price: 2380, originalPrice: 3400, category: "dresses", image: D5  }, 
+  { id: 6,   name: "D6",  price: 2403, originalPrice: 3434, category: "dresses", image: D7 },
+  { id: 116, name: "D7",  price: 1572, originalPrice: 2275, category: "dresses", image: D8,  badge: "New" },
   { id: 117, name: "D8",  price: 2499, originalPrice: 3499, category: "dresses", image: D9,  badge: "New" },
   { id: 118, name: "D9",  price: 2169, originalPrice: 3099, category: "dresses", image: D10, badge: "New" },
   { id: 119, name: "D10", price: 2345, originalPrice: 3350, category: "dresses", image: D11, badge: "New" },
@@ -216,12 +211,8 @@ export const products: Product[] = [
   { id: 12, name: "T6",  price: 420, originalPrice: 600, category: "tops", image: T6,  badge: "New" },
   { id: 13, name: "T7",  price: 770, originalPrice: 1100, category: "tops", image: T7 },
   { id: 14, name: "T8",  price: 420, originalPrice: 600, category: "tops", image: T8, badge: "Sale" },
-  { id: 15, name: "T9",  price: 1, originalPrice: 1099, category: "tops", image: T9,  badge: "New" },
-  { id: 16, name: "T10", price: 1, originalPrice: 1099, category: "tops", image: T10 },
-  { id: 17, name: "T11", price: 1, originalPrice: 999, category: "tops", image: T11, badge: "Sale" },
-  { id: 18, name: "T12", price: 1, originalPrice: 1099, category: "tops", image: T12, badge: "Hot" },
-  { id: 19, name: "T13", price: 1, originalPrice: 1099, category: "tops", image: T13 },
-  { id: 20, name: "T14", price: 1, originalPrice: 1099, category: "tops", image: T14, badge: "Sale" },
+  { id: 15, name: "T9",  price: 909, originalPrice: 1299, category: "tops", image: T9,  badge: "New" },
+  { id: 19, name: "T13", price: 599, originalPrice: 799, category: "tops", image: T13 },
   { id: 21, name: "T15", price: 1399, originalPrice: 1999, category: "tops", image: T15, badge: "New" },
   { id: 22, name: "T16", price: 699, originalPrice: 999, category: "tops", image: T16 },
   { id: 23, name: "T17", price: 476, originalPrice: 680, category: "tops", image: T17, badge: "New" },
@@ -312,30 +303,24 @@ export const products: Product[] = [
   { id: 66, name: "B5",  price: 1199, originalPrice: 1499, category: "bags", image: B5, badge: "Sale", hasSizes: false },
   { id: 67, name: "B6",  price: 1199,  originalPrice: 1499,category: "bags", image: B7,  hasSizes: false },
   { id: 68, name: "B7",  price: 3199, originalPrice: 3999,category: "bags", image: B8,  badge: "New",  hasSizes: false },
-  { id: 69, name: "B8",  price: 1,  originalPrice: 1299,category: "bags", image: B9,  hasSizes: false },
+  { id: 69, name: "B8",  price: 1199,  originalPrice: 1499,category: "bags", image: B9,  hasSizes: false },
   { id: 70, name: "B9",  price: 1199,  originalPrice: 1499, category: "bags", image: B10, badge: "Sale", hasSizes: false },
   { id: 71, name: "B10", price: 880, originalPrice: 1100,category: "bags", image: B11, badge: "Hot",  hasSizes: false },
   { id: 72, name: "B11", price: 1999,  originalPrice: 2499,category: "bags", image: B12, hasSizes: false },
   { id: 73, name: "B12", price: 2239, originalPrice: 2799,category: "bags", image: B13, badge: "New",  hasSizes: false },
 
   // ── NEW ARRIVALS (74–87) ──────────────────────────────────────────────────
-  { id: 74, name: "Elegant Pink Dress",    price: 1, originalPrice: 1999 , category: "new-arrivals", image: D1,  badge: "New" },
-  { id: 75, name: "Classic Black Dress",   price: 1,  originalPrice: 1999 , category: "new-arrivals", image: D2,  badge: "New" },
-  { id: 76, name: "Floral Print Dress",    price: 2555, originalPrice: 3650, category: "new-arrivals", image: D3, badge: "New" },
-  { id: 77, name: "Burgundy Blazer Dress", price: 2380, originalPrice: 3400 , category: "new-arrivals", image: D5,  badge: "New" },
-  { id: 78, name: "Minimalist Dress",      price: 1,  originalPrice: 1999 , category: "new-arrivals", image: D6,  badge: "New" },
-
-  { id: 79, name: "Evening Dress",         price: 1599, originalPrice: 1999 , category: "new-arrivals", image: D7,  badge: "New" },
-  { id: 80, name: "New Arrival 1",         price: 1299, originalPrice: 1999 , category: "new-arrivals", image: NA1, badge: "New" },
-  { id: 81, name: "New Arrival 2",         price: 999,  originalPrice: 1999 , category: "new-arrivals", image: NA2, badge: "New" },
-  { id: 82, name: "New Arrival 3",         price: 1750, originalPrice: 2500, category: "new-arrivals", image: NA3, badge: "New" },
-  { id: 83, name: "New Arrival 4",         price: 2449,   originalPrice: 3499 ,category: "new-arrivals", image: NA4, badge: "New" },
-  { id: 84, name: "New Arrival 5",         price: 2379, originalPrice: 3399 , category: "new-arrivals", image: NA5, badge: "New" },
-  { id: 85, name: "New Arrival 6",         price: 1225,  originalPrice: 1750 , category: "new-arrivals", image: NA6, badge: "New" },
-  { id: 86, name: "New Arrival 7",         price: 2169, originalPrice: 3099, category: "new-arrivals", image: NA7,    badge: "New" },
-  { id: 113, name: "New Arrival 8",          price: 500, originalPrice: 1999 , category: "new-arrivals", image: KIT1,   badge: "New" },
-  { id: 114, name: "New Arrival 9",    price: 380,  originalPrice: 1999 , category: "new-arrivals", image: KIT2,   badge: "New" },
-  { id: 115, name: "New Arrival 10",           price: 850,  originalPrice: 1999 , category: "new-arrivals", image: PANDA1, badge: "New" },
+ 
+  { id: 74, name: "New Arrival 1",         price: 1299, originalPrice: 1999 , category: "new-arrivals", image: NA1, badge: "New" },
+  { id: 75, name: "New Arrival 2",         price: 1399,  originalPrice: 1999 , category: "new-arrivals", image: NA2, badge: "New" },
+  { id: 76, name: "New Arrival 3",         price: 1750, originalPrice: 2500, category: "new-arrivals", image: NA3, badge: "New" },
+  { id: 77, name: "New Arrival 4",         price: 2449,   originalPrice: 3499 ,category: "new-arrivals", image: NA4, badge: "New" },
+  { id: 78, name: "New Arrival 5",         price: 2379, originalPrice: 3399 , category: "new-arrivals", image: NA5, badge: "New" },
+  { id: 79, name: "New Arrival 6",         price: 1225,  originalPrice: 1750 , category: "new-arrivals", image: NA6, badge: "New" },
+  { id: 80, name: "New Arrival 7",         price: 2169, originalPrice: 3099, category: "new-arrivals", image: NA7,    badge: "New" },
+  { id: 81, name: "New Arrival 8",          price: 500, originalPrice: 1999 , category: "new-arrivals", image: KIT1,   badge: "New" },
+  { id: 82, name: "New Arrival 9",    price: 380,  originalPrice: 1999 , category: "new-arrivals", image: KIT2,   badge: "New" },
+  { id: 83, name: "New Arrival 10",           price: 850,  originalPrice: 1999 , category: "new-arrivals", image: PANDA1, badge: "New" },
 
 ];
 
